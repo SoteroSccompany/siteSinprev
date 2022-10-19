@@ -1,0 +1,12 @@
+@media (min-width: 811px){
+    .imgMob {
+        display: none;
+    }
+
+}
+
+@media (max-width: 811px) {
+    .imgDesk {
+        display: none;
+    }
+}
