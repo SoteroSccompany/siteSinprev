@@ -43,6 +43,9 @@ const AuthProvider = ({ children }) => {
     const [sendData, setSendData] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
+    const [createdAt, setCreatedAt] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
+    const [url, setUrl] = useState('')
 
 
 
@@ -85,6 +88,9 @@ const AuthProvider = ({ children }) => {
         setSendData(false)
         setSuccess(false)
         setError(false)
+        setCreatedAt('')
+        setErrorMsg('')
+        setUrl('')
 
     }
 
@@ -128,6 +134,9 @@ const AuthProvider = ({ children }) => {
         error,
         name: `${nome} ${sobrenome}`,
         endereco: logradouro,
+        createdAt,
+        errorMsg,
+        url
 
     }
 
@@ -169,22 +178,54 @@ const AuthProvider = ({ children }) => {
         setSendData,
         setSuccess,
         setError,
+        setCreatedAt,
+        setErrorMsg,
+        setUrl
+    }
+
+    const date = (e) => {
+        const timeElapsed = new Date();
+        const year = timeElapsed.getFullYear();
+        const mounthPure = timeElapsed.getMonth() + 1;
+        const mounth = mounthPure < 10 ? '0' + mounthPure : mounthPure;
+        const day = timeElapsed.getDate();
+        if (e === 'yearFirst') {
+            setCreatedAt(`${year}/${mounth}/${day}`)
+        } else {
+            setCreatedAt(`${day}/${mounth}/${year}`)
+        }
     }
 
     const createSubscription = async () => {
         setSendData(true)
+        date("dayFirst")
+        const url = `https://sinprev.bitrix24.com.br/rest/1/0uniwtcm3dl3kgut/crm.contact.add.json?FIELDS[NAME]=${nome}&FIELDS[LAST_NAME]=${sobrenome}&FIELDS[EMAIL][0][VALUE]=${email}&FIELDS[PHONE][0][VALUE]=${celular}&FIEDLS[UF_CRM_1659677848]=${cpf}&FIELDS[UF_CRM_1659655739]=${sexo}&FIELDS[UF_CRM_1659655757]=${estadoCivil}&FIELDS[UF_CRM_1659655774]=${escolaridade}&FIELDS[UF_CRM_1660177894]=${dataNascimento}&FIELDS[UF_CRM_1659655789]=${cidadeNascimento}&FIELDS[UF_CRM_1659655811]=${estadoNascimento}&FIELDS[UF_CRM_1659655937]=${rg}&FIELDS[UF_CRM_1659655974]=${rgExpedicao}&FIELDS[UF_CRM_1659655992]=${nomePai}&FIELDS[UF_CRM_1659656004]=${nomeMae}&FIELDS[UF_CRM_1659656017]=${empresa}&FIELDS[UF_CRM_1659656033]=${matricula}&FIELDS[UF_CRM_1659546478]=${fundo}&FIELDS[UF_CRM_1659656069]=${aposentado}&FIELDS[UF_CRM_1660163288]=${cep}&FIELDS[UF_CRM_1660163305]=${logradouro}&FIELDS[ADDRESS_CITY]=${cidade}&FIELDS[ADDRESS_PROVINCE]=${estado}&FIELDS[UF_CRM_1659677870]=${numero}&FIELDS[ADDRESS_2]=${complemento}& FIELDS[UF_CRM_1666623156]=${identifier}&FIELDS[UF_CRM_1660117528]=${bairro}&FIELDS[UF_CRM_1660117571]=${estado}&FIELDS[UF_CRM_1663193718]=${estado}&FIELDS[UF_CRM_1659677848]=${cpf}&FIELDS[UF_CRM_1660165909]=${createdAt}`
+        await axios.post(url)
         try {
-            const data = await axios.post("https://sinprev.com.br/wpprev/associate/subscribe", states);
-            //Tratar bem o erro para o usuario saber que nao pode se cadastrar
-            //UTILIZAR EXITUSER
+            date("yearFirst")
+            await axios.post("https://api.sinprev.com.br/wpprev/associate/subscribe", states);
+            setSendData(false)
             clearAll()
+            setUrl('/')
             setSuccess(true)
-            console.log(data)
         } catch (err) {
-            //TRATAR O ERRO => SE FOR APENAS DE CARTAO NAO APAGA TUDO??            
-            clearAll()
-            setError(true)
+            setSendData(false)
             console.log(err)
+            if (err.response.data.msg.msg === 'Usuario ja cadastrado') {
+                clearAll()
+                setUrl('/')
+                setErrorMsg('Usuario ja cadastrado')
+                setError(true)
+            } else if (err.response.data.msg.msg === 'Erro ao cadastrar token') {
+                setUrl('/filiate')
+                setErrorMsg('Erro ao cadastrar seu cartao de credito. Tente novamente!')
+                setError(true)
+            } else {
+                clearAll()
+                setUrl('/')
+                setErrorMsg('Erro ao realizar seu cadastrar. Tente novamente mais tarde!')
+                setError(true)
+            }
         }
 
     }

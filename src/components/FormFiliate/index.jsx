@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/contextFiliate.jsx';
+import axios from 'axios';
 
 export default function Example() {
 
   const { states, setters, createSubscription } = useContext(AuthContext);
   const [checkOut, setCheckOut] = useState(false);
   const [creditCard, setCreditCard] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
 
   const sex = [
     { id: 'H', title: 'Homem' },
@@ -20,8 +22,8 @@ export default function Example() {
   ]
 
   const aposent = [
-    { id: 's', title: "Sim" },
-    { id: 'n', title: "Não" }
+    { id: 1, value: true, title: "Sim" },
+    { id: 2, value: false, title: "Não" }
   ]
 
   const fundo = [
@@ -77,6 +79,24 @@ export default function Example() {
     console.log(states)
   }
 
+  const handleCep = async () => {
+    setReadOnly(true)
+    const { data } = await axios.get(`https://viacep.com.br/ws/${states.cep}/json/`)
+    setters.setLogradouro(data.logradouro)
+    setters.setBairro(data.bairro)
+    setters.setCidade(data.localidade)
+    setters.setEstado(data.uf)
+    setReadOnly(false)
+  }
+
+  const sexo = (e) => {
+      if(states.sexo === undefined){
+          return e.title
+      }else{
+        return states.sexo
+      }
+  }
+
 
 
   return (
@@ -89,9 +109,9 @@ export default function Example() {
         !checkOut ? (
           <form onSubmit={handdleSubscription} >
             <div className="overflow-hidden shadow sm:rounded-md ">
-              <div className="bg-gray-100 px-4 py-5 sm:p-6">
+              <div className="bg-gray-100 px-4 py-5  sm:p-6">
                 <h1 className="text-center mb-9 text-[30px]">Dados de Cadastro</h1>
-                <div className="grid grid-cols-6 gap-6 p-6 m-6">
+                <div className="grid grid-cols-6 gap-6 ">
 
 
                   <div className="col-span-6 sm:col-span-3 ">
@@ -157,7 +177,7 @@ export default function Example() {
                               defaultChecked={notificationMethod.id === 'email'}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               required
-                              value={notificationMethod.title}
+                              value={notificationMethod.title }
                               onChange={e => setters.setSexo(e.target.value)}
                             />
                             <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
@@ -385,7 +405,7 @@ export default function Example() {
                     </div>
                   </div>
 
-                  <div className="col-span-6 sm:col-span-1">
+                  <div className="col-span-6 xl:col-span-1">
                     <label className="text-base font-medium text-gray-900">Aposentado</label>
                     <p className="text-sm leading-5 text-gray-500"></p>
                     <fieldset className="mt-4" >
@@ -399,7 +419,7 @@ export default function Example() {
                               defaultChecked={notificationMethod.id === 'email'}
                               className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               required
-                              value={notificationMethod.title}
+                              value={notificationMethod.value}
                               onChange={e => setters.setAposentado(e.target.value)}
                             />
                             <label htmlFor={notificationMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
@@ -411,7 +431,7 @@ export default function Example() {
                     </fieldset>
                   </div>
 
-                  <div className="col-span-6 sm:col-span-5 ml-12">
+                  <div className="col-span-6 xl:col-span-5 ">
                     <label className="text-base font-medium text-gray-900">Fundo</label>
                     <p className="text-sm leading-5 text-gray-500"></p>
                     <fieldset className="mt-4" >
@@ -488,6 +508,7 @@ export default function Example() {
                           placeholder="00000000"
                           value={states.cep}
                           onChange={(e) => setters.setCep(e.target.value)}
+                          onBlur={handleCep}
                         />
                       </div>
                     </div>
@@ -504,6 +525,7 @@ export default function Example() {
                           placeholder="Seu endereco"
                           value={states.logradouro}
                           onChange={(e) => setters.setLogradouro(e.target.value)}
+                          readOnly={readOnly}
                         />
                       </div>
                     </div>
@@ -521,6 +543,7 @@ export default function Example() {
                           placeholder="Seu endereco"
                           value={states.cidade}
                           onChange={(e) => setters.setCidade(e.target.value)}
+                          readOnly={readOnly}
                         />
                       </div>
                     </div>
@@ -538,6 +561,7 @@ export default function Example() {
                           placeholder="Seu bairro"
                           value={states.bairro}
                           onChange={(e) => setters.setBairro(e.target.value)}
+                          readOnly={readOnly}
                         />
                       </div>
                     </div>
@@ -555,6 +579,7 @@ export default function Example() {
                           placeholder="Seu estado"
                           value={states.estado}
                           onChange={(e) => setters.setEstado(e.target.value)}
+                          readOnly={readOnly}
                         />
                       </div>
                     </div>
@@ -572,6 +597,7 @@ export default function Example() {
                           className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:outline-0 sm:text-sm bg-gray-100"
                           placeholder="Numero da sua casa"
                           onChange={e => setters.setNumero(e.target.value)}
+                          value={states.numero}
                         />
                       </div>
                     </div>
@@ -589,15 +615,11 @@ export default function Example() {
                           placeholder="Digite o complemento"
                           value={states.complemento}
                           onChange={e => setters.setComplemento(e.target.value)}
+                          required
                         />
                       </div>
                     </div>
                   </div>
-
-
-
-
-
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">

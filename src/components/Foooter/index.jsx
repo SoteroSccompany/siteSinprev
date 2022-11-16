@@ -1,5 +1,4 @@
-
-
+import { Link } from "react-router-dom"
 const navigation = {
   solutions: [
     { name: 'Marketing', href: '#' },
@@ -8,27 +7,50 @@ const navigation = {
     { name: 'Insights', href: '#' },
   ],
   support: [
-    { name: 'Pricing', href: '#' },
-    { name: 'Documentation', href: '#' },
-    { name: 'Guides', href: '#' },
-    { name: 'API Status', href: '#' },
+    {
+      id: 1, name: 'Localização', desc: 'Rua Rio Pomba, 504, Bairro Padre Eustáquio, Belo Horizonte, MG, CEP 30720-290',
+      icon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+        </svg>
+      )
+    },
+    {
+      id: 2, name: 'Horários', desc: '8h às 12h | 13h às 17h',
+      icon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    },
+    {
+      id: 3, name: 'Contatos', desc: `(31) 97136-6684      (31) 99753-9083  conntato@sinprev.org.br`,
+      icon: () => (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+
+      )
+    },
   ],
   company: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Partners', href: '#' },
+    { id: 1, name: 'Página inicial', href: '/' },
+    { id: 2, name: 'institucional', href: '/institucional' },
+    { id: 3, name: 'Quem Somos', href: false },
+    { id: 4, name: 'Ações Judiciais', href: '#' },
   ],
   legal: [
-    { name: 'Claim', href: '#' },
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
+    { id: 1, name: 'Pergintas Frequentes', href: '/faq' },
+    { id: 2, name: 'Editais de convicação', href: '/edital' },
+    { id: 3, name: 'Estatuto', href: '/estatuto' },
+    { id: 4, name: 'Associe-se', href: '/filiate' },
   ],
   social: [
     {
+      id: 1,
       name: 'Facebook',
-      href: 'https://www.facebook.com/Sinprevoficial/',
+      href: '#',
       icon: (props) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -40,8 +62,9 @@ const navigation = {
       ),
     },
     {
+      id: 2,
       name: 'Instagram',
-      href: 'https://www.instagram.com/sinprev_oficial/',
+      href: '#',
       icon: (props) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -52,98 +75,136 @@ const navigation = {
         </svg>
       ),
     },
-    
+    {
+      id: 3,
+      name: 'Twitter',
+      href: '#',
+      icon: (props) => (
+        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+        </svg>
+      ),
+    },
   ],
 }
-const dateFull = new Date()
-const Year = dateFull.getFullYear()
 
-export default function Footer() {
-  /*
-  (function (w, d, u) {
-    var s = d.createElement('script'); s.async = true; s.src = u + '?' + (Date.now() / 60000 | 0);
-    var h = d.getElementsByTagName('script')[0]; h.parentNode.insertBefore(s, h);
-  })(window, document, 'https://cdn.bitrix24.com.br/b21745989/crm/site_button/loader_2_l7jhd7.js');*/
+
+const acoesJud = () => {
+  window.location.href = "https://sinprev.com.br/informativo.pdf"
+}
+
+export default function Example() {
   return (
-      <footer className="bg-gray-800" aria-labelledby="footer-heading">
-        <h2 id="footer-heading" className="sr-only">
-          Footer
-        </h2>
-        <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-          <div className="pb-8 xl:grid xl:grid-cols-5 xl:gap-8">
-            {/*
-            <div className="grid grid-cols-2 gap-8 xl:col-span-4">
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-base font-medium text-white">Solutions</h3>
+    <footer className="bg-gray-800" aria-labelledby="footer-heading">
 
+      <h2 id="footer-heading" className="sr-only">
+        Footer
+      </h2>
+      <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+          <div className="grid grid-cols-2 gap-8 xl:col-span-2">
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              <div>
+                <img src="https://sinprev.com.br/logo-sinprev-rodape.png" />
+                <div className="mt-6 flex">
+                  {navigation.social.map((item) => (
+                    <a key={item.id} href={item.href} className="text-gray-400 hover:text-gray-300">
+                      <span className="sr-only ">{item.name}</span>
+                      <item.icon className="h-6 w-6 mr-2" aria-hidden="true" />
 
-                  <ul role="list" className="mt-4 space-y-4">
-                    {navigation.solutions.map((item) => (
-                      <li key={item.name}>
-                        <a href={item.href} className="text-base text-gray-300 hover:text-white">
-                          {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-12 md:mt-0">
-                  <h3 className="text-base font-medium text-white">Support</h3>
-                  <ul role="list" className="mt-4 space-y-4">
-                    {navigation.support.map((item) => (
-                      <li key={item.name}>
-                        <a href={item.href} className="text-base text-gray-300 hover:text-white">
-                          {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                    </a>
+                  ))}
                 </div>
               </div>
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-base font-medium text-white">Company</h3>
-                  <ul role="list" className="mt-4 space-y-4">
-                    {navigation.company.map((item) => (
-                      <li key={item.name}>
-                        <a href={item.href} className="text-base text-gray-300 hover:text-white">
-                          {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-12 md:mt-0">
-                  <h3 className="text-base font-medium text-white">Legal</h3>
-                  <ul role="list" className="mt-4 space-y-4">
-                    {navigation.legal.map((item) => (
-                      <li key={item.name}>
-                        <a href={item.href} className="text-base text-gray-300 hover:text-white">
-                          {item.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="mt-12 md:mt-0">
+                {
+                  navigation.support.map((item) => (
+                    <span key={item.id}>
+                      <h3 className="text-base font-medium text-white mt-6" >{item.name}</h3>
+                      <ul role="list" className="mt-4 space-y-4" >
+                        <li  >
+                          <a href={item.href} className="text-base text-gray-300 hover:text-white text-center">
+                            {item.desc}
+                          </a>
+                        </li>
+                      </ul>
+                    </span>
+                  ))
+                }
               </div>
             </div>
-                    */}
+            <div className="md:grid md:grid-cols-2 md:gap-8 ml-5">
+              <div>
+                <h3 className="text-base font-medium text-white">Links Rápidos</h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {navigation.company.map((item) =>
+                    item.href !== false ?
+                      (
+                        <li key={item.id}>
+                          <Link to={item.href} className="text-base text-gray-300 hover:text-white">
+                            {item.name}
+                          </Link>
+                        </li>
+                      ) : (
+                        <li key={item.id}>
+                          <Link onClick={acoesJud} className="text-base text-gray-300 hover:text-white">
+                            {item.name}
+                          </Link>
+                        </li>
+                      )
+                  )}
+                </ul>
+              </div>
+              <div className="mt-12 md:mt-0">
+                <h3 className="text-base font-medium text-white">Legal</h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {navigation.legal.map((item) => (
+                    <li key={item.id}>
+                      <a href={item.href} className="text-base text-gray-300 hover:text-white">
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
-            <div className="flex space-x-6 md:order-2">
-              {navigation.social.map((item) => (
-                <a key={item.name} href={item.href} className="text-gray-400 hover:text-gray-300">
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-            <p className="mt-8 text-base text-gray-400 md:order-1 md:mt-0">
-              &copy; {Year} Sinprev, Todos os direitos reservados.
+          {/*
+          <div className="mt-8 xl:mt-0">
+            <h3 className="text-base font-medium text-white">Fique por dentro de todas as noticias!</h3>
+            <p className="mt-4 text-base text-gray-300">
+              Coloque seu melhor e-mail.
             </p>
+            <form className="mt-4 sm:flex sm:max-w-md">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                type="email"
+                name="email-address"
+                id="email-address"
+                autoComplete="email"
+                required
+                className="w-full min-w-0 appearance-none rounded-md border border-transparent bg-white py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:border-white focus:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                placeholder="Digite seu e-mail"
+              />
+              <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                <button
+                  type="submit"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-500 py-2 px-4 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
           </div>
+           */}
         </div>
-      </footer>
+        <div className=" mt-8 border-t border-gray-700 pt-8 md:flex md:flex-col md:items-center md:justify-center">
+          <p className="text-[white] mb-5">Layout desenvolvido por: </p>
+          <img src="http://localhost:3000/images/kwcode-bco-1.png" />
+        </div>
+      </div>
+    </footer>
   )
 }

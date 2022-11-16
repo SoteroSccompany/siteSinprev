@@ -1,277 +1,460 @@
 import Header from '../../components/Header'
-import { LifebuoyIcon, NewspaperIcon, PhoneIcon } from '@heroicons/react/24/outline'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid'
-import './home.css'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { CheckIcon } from '@heroicons/react/24/outline'
 import Footer from '../../components/Foooter'
 
-const features = [
-    {
-        name: 'Pioneirismo e vanguarda',
-        description: `O SINPREV surgiu do vácuo sindical, pela falta de uma entidade sindical com finalidade especifica de defesa dos participantes dos fundos de pensão. Nossa luta é atemporal, lutamos por nós, por aqueles que nos antecederam e para que a luta de nossos sucessores seja menos árdua.`,
-    },
-    {
-        name: 'Garantia de respaldo jurídico',
-        description: `O SINPREV em sua luta diária para recuperar o patrimônio dos Participantes das Entidades Fechadas de Previdência Complementar busca sempre parcerias robustas e embasamento para que as ações sejam conduzidas da melhor forma possível.
-
-    O SINPREV sempre atuará na proteção do interesse daqueles a quem representa, assumindo a liderança em ações que visem a recuperação do nosso patrimônio.`,
-    },
-    {
-        name: 'Acesso a Benefícios',
-        description: `O SINPREV busca criar benefícios, transpondo as vantagens sindicais para outros aspectos importantes da vida dos associados, como em educação e saúde. Através de planos de saúde, seguro de vida e planos PET.
-
-    São descontos permanentes ou temporários, promoções e demais ações pontuais que são promovidas de maneira constante em benefício dos associados.`,
-    },
-    {
-        name: 'Fontes de informação',
-        description: `Na era da informação, o acesso a conteúdo de alta qualidade com severo filtro anti- Fake News é de suma importância para que os associados encontrem notícias relevantes sobre os fundos de pensão. Assim como, promover lives com conteúdos de extrema relevância para os associados.`,
-    },
-    {
-        name: 'Possibilidade de negociações coletivas',
-        description: `A ação de natureza coletiva, em geral, como a ação civil pública e o mandado de segurança coletivo, trazem vantagens relacionadas com a economia processual e com a celeridade do Poder Judiciário, de modo a evitar a propositura de ações de mesma natureza, promovendo a rápida consolidação jurisprudencial.`,
-    },
-    {
-        name: 'Aumento da força da categoria',
-        description: `Sabemos que a união faz a força e ser associado ao SINPREV fortalece a nossa luta.
-
-    Juntos na luta pela recuperação do nosso patrimônio.`,
-    },
-
-]
-
-const incentives = [
-    {
-      name: 'Funcef',
-      description: "Fundação dos Economiários Federais",
-      imageSrc: 'https://www.funcef.com.br/lumis-theme/br/com/funcef/portal/theme/funcef/images/icones/logo_funcef.png',
-    },
-    {
-      name: 'Petros',
-      description: 'Fundação Petrobras de Seguridade Social',
-      imageSrc: 'https://files.petros.com.br/images/logo_petros_header.png',
-    },
-    {
-      name: 'Postalis',
-      description: "O Postalis – Instituto de Previdência Complementa",
-      imageSrc: 'http://www.postalis.org.br/wp-content/uploads/2020/08/logo-postalis-web-alta.png',
-    },
-    {
-      name: 'Aerus',
-      description: "Instituto Aerus de Seguridade Social.",
-      imageSrc: 'https://autoatendimento.aerus.com.br/Images/Aerus/logo_extrajudicial_topo.png',
-    },
-  ]
-  
-
-const supportLinks = [
-    {
-        name: 'Equipe de Atendimento',
-        href: '/',
-        description:
-            'Entre em contato com nossa equipe de atendimento, estamos disponiveis',
-        icon: PhoneIcon,
-    },
-    {
-        name: 'Suporte juridico',
-        href: '/',
-        description:
-            'Tenha acesso ao nosso time juridico e obtenha suporte tecnico dos advogados do SINPREV',
-        icon: LifebuoyIcon,
-    },
-    {
-        name: 'Estatuto',
-        href: '/',
-        description:
-            `Acesse o estatuto do SINPREV. Tenha acesso ao estatuto vigente do sinprev`,
-        icon: NewspaperIcon,
-    },
-]
-
 export default function Home() {
+
+    const history = useNavigate()
+
+    const [descNumUm, setDescNumUm] = useState({ num: 0, content: '' })
+    const [descNumDois, setDescNumDois] = useState({ num: 0, content: '' })
+    const [descNumTres, setDescNumTres] = useState({ num: 0, content: '' })
+    const [descNumQuatro, setDescNumQuatro] = useState({ num: 0, content: '' })
+
+    const dateNum = [
+        {
+            id: 1,
+            num: 1,
+            content: 'Único sindicato que representa os assitidos pela previdência complementar',
+        },
+        {
+            id: 2,
+            num: 26,
+            content: 'Sindicato que mais cresce no Brasil',
+        },
+        {
+            id: 3,
+            num: 100,
+            content: 'Mais de 100 ações judiciasi em defesa dos aposentados',
+        },
+        {
+            id: 4,
+            num: 2697,
+            content: 'Valor de nossa mensalidade',
+        }
+    ]
+
+    const dataValues = [
+        {
+            id: 1,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/pioneirismo.webp',
+            title: 'Pioneirismo e vanguarda',
+            desc: 'O SINPREV surgiu do vácuo sindical, pela falta de uma entidade sindical com finalidade especifica de defesa dos participantes dos fundos de pensão. Nossa luta é atemporal, lutamos por nós, por aqueles que nos antecederam e para que a luta de nossos sucessores seja menos árdua.'
+        },
+        {
+            id: 2,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/juridico.webp',
+            title: 'Garantia de respaldo jurídico',
+            desc: 'O SINPREV em sua luta diária para recuperar o patrimônio dos Participantes das Entidades Fechadas de Previdência Complementar busca sempre parcerias robustas e embasamento para que as ações sejam conduzidas da melhor forma possível.  O SINPREV sempre atuará na proteção do interesse daqueles a quem representa, assumindo a liderança em ações que visem a recuperação do nosso patrimônio.'
+
+        },
+        {
+            id: 3,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/beneficios.webp',
+            title: 'Acesso a Benefícios',
+            desc: 'O SINPREV busca criar benefícios, transpondo as vantagens sindicais para outros aspectos importantes da vida dos associados, como em educação e saúde. Através de planos de saúde, seguro de vida e planos PET. São descontos permanentes ou temporários, promoções e demais ações pontuais que são promovidas de maneira constante em benefício dos associados.',
+        },
+        {
+            id: 4,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/fake-news.webp',
+            title: 'Fonte de informações',
+            desc: 'Na era da informação, o acesso a conteúdo de alta qualidade com severo filtro anti- Fake News é de suma importância para que os associados encontrem notícias relevantes sobre os fundos de pensão. Assim como, promover lives com conteúdos de extrema relevância para os associados.'
+        },
+        {
+            id: 5,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/grupo.webp',
+            title: 'Possibilidade de negociações coleticas',
+            desc: 'A ação de natureza coletiva, em geral, como a ação civil pública e o mandado de segurança coletivo, trazem vantagens relacionadas com a economia processual e com a celeridade do Poder Judiciário, de modo a evitar a propositura de ações de mesma natureza, promovendo a rápida consolidação jurisprudencial.'
+        },
+        {
+            id: 6,
+            src: 'http://tubodeensaio.com.br/wp-content/uploads/2022/07/forca.webp',
+            title: 'Aumento da força da caregoria',
+            desc: 'Sabemos que a união faz a força e ser associado ao SINPREV fortalece a nossa luta. Juntos na luta pela recuperação do nosso patrimônio.'
+        }
+    ]
+
+
+    const news = [
+        {
+            id: 1,
+            title: 'Recuperação dos fundos de pensão',
+            desc: 'O SINPREV está trabalhando para a divulgação de uma proposta elaborada pelo presidente Robledo Coimbra para recuperação dos Fundos de Pensão'
+        },
+        {
+            id: 2,
+            title: 'Ofício enviado pelo SINPREV à Previc sobre a Petros',
+            desc: 'O SINPREV encaminhou à Superintendência Nacional de Previdência Complementar (PREVIC) um ofício pedindo esclarecimentos sobre a aprovação das alterações propostas ao regulamento do Plano Petros do Sistema Petrobrás (PPSP).'
+        },
+        {
+            id: 3,
+            title: 'Área do Associado do site do SINPREV instável',
+            desc: 'Olá, associado! Gostaríamos de informar que a área do associado apresenta instabilidade, pois o SINPREV está passando por uma restruturação tecnológica'
+        }
+    ]
+
+    const advogados = [
+        {
+            id: 1,
+            esc1: 'https://sinprev.com.br/images/araujo.jpg',
+            esc2: 'https://sinprev.com.br/images/bertoldo.jpg',
+            esc3: 'https://sinprev.com.br/images/gilberto.jpg',
+            esc4: 'https://sinprev.com.br/images/ervedosa.jpg',
+            active: 'active',
+        },
+        {
+            id: 2,
+            esc1: 'https://sinprev.com.br/images/amaral.webp',
+            esc2: 'https://sinprev.com.br/images/silva-netto.jpg',
+            esc3: 'https://sinprev.com.br/images/araujo.jpg',
+            esc4: 'https://sinprev.com.br/images/bertoldo.jpg',
+            active: '',
+        },
+        {
+            id: 3,
+            esc1: 'https://sinprev.com.br/images/gilberto.jpg',
+            esc2: 'https://sinprev.com.br/images/ervedosa.jpg',
+            esc3: 'https://sinprev.com.br/images/amaral.webp',
+            esc4: 'https://sinprev.com.br/images/silva-netto.jpg',
+            active: '',
+        }
+    ]
+
+
+    const route = () => {
+        history("/about")
+
+    }
+
+    const filiate = () => {
+        
+        history("/filiate")
+
+    }
+
+
+    useEffect(() => {
+        dateNum.forEach(item => {
+            if (item.id === 1) {
+                setDescNumUm(item)
+            }
+            if (item.id === 2) {
+                setDescNumDois(item)
+            }
+            if (item.id === 3) {
+                setDescNumTres(item)
+            }
+            if (item.id === 4) {
+                setDescNumQuatro(item)
+            }
+
+        })
+
+    }, [])
+
+
     return (
-        <div className='content'>
-            <Header />
-            <div className="bg-white ">
-                {/* Header */}
-                <div className="imgDesk relative bg-gray-800 pb-32">
-                    <div className="absolute inset-0 ">
-                        <img
-                            className="h-full w-full object-cover  "
-                            src="https://sinprev.org.br/wp-content/uploads/2022/08/banner-01.jpg"
-                            alt=""
-                        />
-                    </div>
-                    <div className="relative mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8 mb-16 ">
-                    </div>
-                </div>
-                <div className="imgMob relative bg-gray-800 pb-32  ">
-                    <div className="absolute inset-0 ">
-                        <img
-                            className="h-full w-full object-cover  "
-                            src="https://sinprev.org.br/wp-content/uploads/2022/08/banner-1-mobile.jpg"
-                            alt=""
-                        />
-                    </div>
-                    <div className="relative mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8 mb-16 ">
-                    </div>
-                </div>
+        <>
+            <div className='content '>
+                <Header />
 
-                {/* Overlapping cards */}
-                <section
-                    className="relative z-0 mx-auto -mt-32 max-w-7xl px-4 pb-32 sm:px-6 lg:px-8"
-                    aria-labelledby="contact-heading"
-                >
-
-                    <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8 opacity-80">
-                        {supportLinks.map((link) => (
-                            <div key={link.name} className="flex flex-col rounded-2xl bg-white shadow-xl">
-                                <div className="relative flex-1 px-6 pt-16 pb-8 md:px-8">
-                                    <div className="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-sky-700 p-5 shadow-lg">
-                                        <link.icon className="h-6 w-6 text-white" aria-hidden="true" />
-                                    </div>
-                                    <h3 className="text-xl font-medium text-gray-900">{link.name}</h3>
-                                    <p className="mt-4 text-base text-gray-500">{link.description}</p>
-                                </div>
-                                <div className="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
-                                    {/*<Link to={link.href} className="text-base font-medium text-sky-700 hover:text-sky-500">
-                                        Saiba Mais<span aria-hidden="true"> &rarr;</span>
-                                    </Link>*/}
-                                </div>
+                <div className='carrousel flex sm:mb-[3%]   '>
+                    <div
+                        id="carouselDarkVariant"
+                        className="carousel slide carousel-fade carousel-dark relative"
+                        data-bs-ride="carousel"
+                    >
+                        <div className="carousel-inner relative w-full overflow-hidden ">
+                            <div className="carousel-item active relative float-left w-full ">
+                                <img
+                                    src="https://sinprev.com.br/images/banner-01.jpg"
+                                    className="hidden w-full sm:block max-w-full h-auto"
+                                    alt="Motorbike Smoke"
+                                />
+                                <img
+                                    src="https://sinprev.com.br/images/banner-1-mobile.jpg"
+                                    className="block w-full sm:hidden"
+                                    alt="Motorbike Smoke"
+                                />
                             </div>
-                        ))}
-                    </div>
-                </section>
-            </div>
 
-            <div className="relative bg-white-800 mb-28  rounded-r-[40px] rounded-l-[80px] bg-white shadow-[35px_30px_60px_15px_rgba(0,0,0,0.3)] m-[10px]">
-                <div className="bg-sky-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2 rounded-l-[40px]">
-                    <img
-                        className="h-full w-full object-cover  rounded-l-[40px]"
-                        src="https://cdn.pixabay.com/photo/2017/07/10/23/45/cubes-2492010_1280.jpg"
-                        alt=""
-                    />
+
+                            <div className="carousel-item relative float-left w-full ">
+                                <img
+                                    src="https://sinprev.com.br/images/banner-02.jpg"
+                                    className="hidden w-full h-full sm:block"
+                                    alt="Woman Reading a Book"
+                                />
+                                <img
+                                    src="https://sinprev.com.br/images/banner-02-mobile.jpg"
+                                    className="block w-full h-full sm:hidden"
+                                    alt="Woman Reading a Book"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            className="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                            type="button"
+                            data-bs-target="#carouselDarkVariant"
+                            data-bs-slide="prev"
+                        >
+                            <span className="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span className="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            className="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                            type="button"
+                            data-bs-target="#carouselDarkVariant"
+                            data-bs-slide="next"
+                        >
+                            <span className="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                            <span className="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
-                <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-                    <div className="md:ml-auto md:w-1/2 md:pl-10">
-                        <h2 className="text-lg font-semibold text-black-300">Quem somos</h2>
-                        <p className="mt-2 text-3xl font-bold tracking-tight text-black sm:text-4xl">Conheça o <span className='text-5xl text-[#1565ae]'>SINPREV</span></p>
-                        <p className="mt-3 text-lg text-black-300">
+
+                <div className='flex flex-col md:flex-row mt-[3%] pb-10 max-[640px]:items-center ≈'>
+                    <img
+                        src="https://sinprev.com.br/images/quem-somos-home.webp"
+                        alt="..."
+                        className='md:w-[35%] ls:w-[45%] w-[75%] mt-6 ml-8 md:ml-9'
+                    />
+
+                    <div className='flex flex-col ml-12  pb-8 mt-[8%] md:mt-[10%]'>
+                        <h2 className='font-serif pb-1 text-[20px] font["Popins"]'>Quem Somos</h2>
+                        <h1 className=''>
+                            <span className='text-[35px] md:text-[47px] lh:text-[60px] text-[#313131] font-["Be Vietnam Bold"] font-bold '>Conheça o <br /></span>
+                            <span className='text-[35px] md:text-[37px] lh:text-[55px] text-[#1565AE] font-["Be Vietnam Bold"] font-bold'>SINPREV</span>
+                        </h1>
+                        <p className='w-[90%] text-star font-["Popins"] text-[20px]'>
                             Somos um sindicato que representa de forma ética os interesses dos aposentados vinculados a entidades fechadas de previdência complementar no Brasil.
                         </p>
-                        <div className="mt-8">
-                            <div className="inline-flex rounded-md shadow">
-                                <Link
-                                    to="/about"
-                                    className="inline-flex items-center justify-center rounded-md border border-transparent bg-[#068E27] px-5 py-3 text-base font-medium text-white hover:bg-green-500 rounded-full"
-                                >
-                                    Saiba mais
-                                    <ArrowTopRightOnSquareIcon className="-mr-1 ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </Link>
-                            </div>
+                        <div className=''>
+                            <button type="button" onClick={route}  className="w-[55%] sm:w-[35%]  h-[60px] mt-8 px-2 py-2.5 bg-[#036B1D] text-white font-medium text-lg leading-tight uppercase rounded-full shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">SAIBA MAIS</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div className='bg-[url("https://sinprev.com.br/images/bg-numeros-copy.webp")] bg-right pb-16'  >
+                    <div className='flex flex-col justify-center items-center  text-center pt-[25%] sm:pt-[5%]'>
+                        <h1 className='text-white font-["Popins"] text-[22px]'>Porque se afiliar</h1>
+                        <span className='text-white font-["Popins"] text-[54px] mb-0'>Veja os nossos números</span>
+                    </div>
+                    <div className='flex flex-col sm:flex-row justify-center items-center mr-[5%]'>
+                        <div className='flex flex-col items-center  pt-5 ml-[5%]'>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[70px] mb-0 text-[#379AD5]'>{descNumUm.num}</span>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[22px] w-[55%] text-center'>{descNumUm.content}</span>
+                        </div>
+                        <div className='flex flex-col items-center  pt-5 mr-[5%]'>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[70px] mb-0 text-[#379AD5]'>{descNumDois.num}</span>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[22px] w-[55%] text-center'>{descNumDois.content}</span>
+                        </div>
+                        <div className='flex flex-col items-center  pt-5 mr-[5%]'>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[70px] mb-0 text-[#379AD5]'>{descNumTres.num}</span>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[22px] w-[55%] text-center'>{descNumTres.content}</span>
+                        </div>
+                        <div className='flex flex-col items-center  pt-5 mr-[5%]'>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[70px] mb-0 text-[#379AD5]'>{descNumQuatro.num / 100}</span>
+                            <span className='text-white font-["Be Vietnam Bold"] text-[22px] w-[55%] text-center'>{descNumQuatro.content}</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div className="bg-[#1565ae] mb-16">
-                <div className="mx-auto max-w-7xl py-12 px-4 sm:py-16 sm:px-6 lg:px-8 lg:py-20">
-                    <div className="mx-auto max-w-4xl text-center">
-                        <p className="mt-3 text-xl text-indigo-200 sm:mt-4">
-                            Por que se filiar ?
+                <div className='flex flex-col justify-center'>
+                    <div className='title flex flex-col justify-center items-center pt-16'>
+                        <h1 className='text-blue font-["Popins"] text-[20px]'>Porque se afiliar</h1>
+                        <div className='flex flex-col sm:flex-row justify-center items-center p-2'>
+                            <span className='text-[#133268] font-["Be Vietnam Bold"] font-bold text-[55px] mb-0'>Nossos </span>
+                            <span className='text-[#379ad5] font-["Be Vietnam Bold"] text-[55px] font-bold mb-0 pl-6'>Diferenciais</span>
+                        </div>
+                        <p className='text-["Be Vietnam Bold"] text-[18px] pb-8 text-center pr-6 pl-6'>
+                            O Sinprev, defende os interesses de aposentados vinculados a entidades fechadas de previdência complementar no Brasil.
                         </p>
-                        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                            Veja nossos numeros
-                        </h2>
+
                     </div>
-                    <dl className="mt-10 p-0 text-center sm:mx-auto sm:grid sm:max-w-3xl sm:grid-cols-4 sm:gap-8">
-                        <div className="flex flex-col mr-9">
-                            <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">Único sindicato que representa os assistidos pela previdência complementar</dt>
-                            <dd className="order-1 text-5xl font-bold tracking-tight text-white">1</dd>
+                    <div className='body flex flex-row justify-center'>
+                        <div className='grid grid-cols-1 sm:grid-cols-6 pb-6'>
+
+                            {
+                                dataValues.map(item => {
+                                    return (
+                                        <div key={item.id} className='col-span-6 md:col-span-2 mr-[18%]'>
+                                            <div className='flex flex-row items-center justify-start w-[80%] mt-6 ml-[14%]'>
+                                                <img src={item.src} alt="..." className='w-[50px] h-[50px]' />
+                                                <span className='text-[#133268] font-["Be Vietnam Bold"] font-bold text-[20px] mb-0 ml-4'>{item.title}</span>
+                                            </div>
+                                            <div className='flex flex-row pl-[10%] w-[90%] mt-6 ml-[15%] pb-6'>
+                                                <p className='text-[#133268] font-["Be Vietnam Bold"] font-bold text-[15px] mb-0 ml-4 text-justify'>{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
-                        <div className="mt-10 flex flex-col sm:mt-0 ">
-                            <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">Estamos presentes em TODOS os Estados do Brasil</dt>
-                            <dd className="order-1 text-5xl font-bold tracking-tight text-white">26</dd>
-                        </div>
-                        <div className="mt-10 flex flex-col sm:mt-0">
-                            <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">Mais de 100 ações judiciais em defesa dos aposentados</dt>
-                            <dd className="order-1 text-5xl font-bold tracking-tight text-white">100</dd>
-                        </div>
-                        <div className="mt-10 flex flex-col sm:mt-0">
-                            <dt className="order-2 mt-2 text-lg font-medium leading-6 text-indigo-200">O valor de nossa mensalidade</dt>
-                            <dd className="order-1 text-5xl font-bold tracking-tight text-white">$26.97</dd>
-                        </div>
-                    </dl>
+                    </div>
                 </div>
-            </div>
 
-
-            <div className="bg-white">
-                <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-center mb-16">
-                        <p className=" text-lg text-gray-500">
-                            Por que se filiar?
-                        </p>
-                        <h2 className="text-[65px] font-bold tracking-tight text-gray-900"><span className='text-[#133268]'>Nossos</span>  <span className='text-[#389AD5]'>Diferenciais</span></h2>
+                <div className=' bg-[url("https://sinprev.com.br/images/bg-afiliese-copy-1.webp")] bg-right pb-16'  >
+                    <div className='flex flex-col justify-center items-center text-center pt-[10%] sm:pt-[5%]'>
+                        <h1 className='flex flex-col sm:flex-row text-white font-["Be Vietnam Bold"] text-[38px]  '>Associe-se agora ao
+                            <span className='text-white font-["Be Vietnam Bold"] text-[39px] mb-0 pl-[0.4em]'>SINPREV</span>
+                        </h1>
+                        <button onClick={filiate} className='bg-[#068e27] text-white font-["Be Vietnam Bold"] text-[20px] sm:w-[30%] sm:h-[50px] h-[60px] w-[190px]  mt-6  rounded-full shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out'>Quero me associar</button>
                     </div>
-                    <dl className="mt-12 space-y-10  sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8">
-                        {features.map((feature) => (
-                            <div key={feature.name} className="relative">
-                                <dt>
-                                    <CheckIcon className="absolute h-6 w-6 text-green-500" aria-hidden="true" />
-                                    <p className="ml-9 text-lg font-medium leading-6 text-gray-900">{feature.name}</p>
-                                </dt>
-                                <dd className="mt-2 ml-9 text-base text-gray-500">{feature.description}</dd>
+                </div>
+
+                <div className='flex flex-col justify-center items-center text-center pb-[35%] sm:pb-[4%] pt-[5%] sm:pt-[0%]'>
+                    <div className='flex flex-col justify-center items-center text-center pt-[10%] sm:pt-[5%]'>
+                        <h1 className='text-[#133268] font-["Be Vietnam Bold"] font-bold text-[38px] sm:text-[48px] mr-[2%] sm:mr-[0%] pb-12'>Últimas <span className='text-[#389AD5]'>Notícias</span></h1>
+                        <div className='grid grid-cols-1 sm:grid-cols-6 ml-[5%]'>
+
+                            {
+                                news.map(item => {
+                                    return (
+                                        <div key={item.id} className='col-span-6 md:col-span-2 '>
+                                            <div className='w-[80%] flex flex-col  '>
+                                                <span className='text-[black] font-["Be Vietnam Bold"] font-bold text-[22px] mb-0 ml-4 text-justify pb-4'>{item.title}</span>
+                                                <p className='text-[black] font-["Be Vietnam Bold"]  text-[15px] mb-0 ml-4 text-justify'>{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div className=' bg-[url("https://sinprev.com.br/images/bg-escritorios.webp")] bg-right pb-16'  >
+                    <div className='flex flex-col justify-center items-center text-center pt-[10%] sm:pt-[5%]'>
+                        <h1 className='flex flex-col sm:flex-row text-black font-["Be Vietnam Bold"] font-bold   '>Escritórios de Advocacia </h1>
+                        <h1 className='flex flex-col sm:flex-row text-[#133268] font-["Be Vietnam Bold"] font-bold text-[42px]'>Escritórios <span className='text-[#389ad5] ml-3'>parceiros</span>
+                        </h1>
+                        <div id="carouselExampleCaptions" className="carousel slide relative" data-bs-ride="carousel">
+                            <div className="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide-to="0"
+                                    className="active"
+                                    aria-current="true"
+                                    aria-label="Slide 1"
+                                ></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide-to="1"
+                                    aria-label="Slide 2"
+                                ></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide-to="2"
+                                    aria-label="Slide 3"
+                                ></button>
                             </div>
-                        ))}
-                    </dl>
-                </div>
-            </div>
+                            <div className="carousel-inner relative w-full overflow-hidden">
+                                {
+                                    advogados.map(item => {
 
+                                        if (item.id === 1) {
+                                            return (
+                                                <div key={item.id} className="carousel-item active relative float-left w-full">
+                                                    <div className=" px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+                                                        <div className="flex flex-wrap -m-1 md:-m-2">
+                                                            <div className="flex flex-wrap w-1/2 sm:w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc1} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-wrap w-1/2 sm:w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc2} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="sm:flex hidden flex-wrap w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc3} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="sm:flex hidden flex-wrap w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc4} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-
-
-            <div className="bg-sky-100">
-                <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:flex lg:items-center lg:justify-between lg:py-24 lg:px-8">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900 md:text-3xl">
-                        <span className="block">Vamos juntos defender nossos fundos de pensao?</span>
-                        <span className="block text-blue-700">Associe-se agora mesmo!</span>
-                    </h2>
-                    <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-                        <div className="inline-flex rounded shadow mr-[250px]">
-                            <Link
-                                to="/filiate"
-                                className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700"
+                                                </div>
+                                            )
+                                        } else {
+                                            return (
+                                                <div key={item.id} className="carousel-item  relative float-left w-full">
+                                                    <div className=" px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+                                                        <div className="flex flex-wrap -m-1 md:-m-2">
+                                                            <div className="flex flex-wrap w-1/2 sm:w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc1} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-wrap sm:w-1/4 w-1/2">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc2} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="sm:flex hidden flex-wrap w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc3} />
+                                                                </div>
+                                                            </div>
+                                                            <div className="sm:flex hidden flex-wrap w-1/4">
+                                                                <div className="w-full p-1 md:p-2">
+                                                                    <img alt="gallery" className="block object-cover object-center w-full h-full rounded-lg"
+                                                                        src={item.esc4} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                    })
+                                }
+                            </div>
+                            <button
+                                className=" carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                                type="button"
+                                data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide="prev"
                             >
-                                Associar-se
-                            </Link>
+                                <span className="carousel-control-prev-icon inline-block  bg-no-repeat bg-[black]" aria-hidden="true"></span>
+                                <span className="visually-hidden ">Previous</span>
+                            </button>
+                            <button
+                                className="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                                type="button"
+                                data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide="next"
+                            >
+                                <span className="carousel-control-next-icon inline-block bg-no-repeat bg-[black]" aria-hidden="true"></span>
+                                <span className="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="bg-gray-50">
-                <div className='flex flex-col justify-center items-center mb-0'> 
-                        <h1 className='block mt-5 mb-0 text-[50px] text-blue-700'>Fundos Participantes</h1>
-                </div>
-                <div className="mx-auto max-w-2xl py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8 ">
-                    <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
-                        {incentives.map((incentive) => (
-                            <div key={incentive.name}>
-                                <img src={incentive.imageSrc} alt="" className="h-24 w-auto" />
-                                <h3 className="mt-6 text-sm font-medium text-gray-900">{incentive.name}</h3>
-                                <p className="mt-2 text-sm text-gray-500">{incentive.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
 
+            </div>
             <Footer />
-
-
-        </div>
+        </>
     )
 }
